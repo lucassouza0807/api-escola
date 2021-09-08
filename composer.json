@@ -1,6 +1,6 @@
 {
-    "name" :"sistema/escola",
-    "description": "Sistema de escola",
+    "name" :"elmini/framework",
+    "description": "Mini framework MVC",
     "license": "MIT",
     "authors": [
         {
