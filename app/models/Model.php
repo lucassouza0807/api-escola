@@ -70,7 +70,7 @@ class Model
             }
 
         }catch(\PDOException $e){
-            echo "Erro :".$e->getMessage();
+            echo "ERROR :".$e->getMessage();
 
         }
 
@@ -89,7 +89,7 @@ class Model
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         }catch(Exception $e){
-            return "meu ovo";
+            return "ERROR";
         }
         
         return $result ;

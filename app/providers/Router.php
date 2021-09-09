@@ -41,7 +41,6 @@ class Router
         
         $callback = null ;
 
-        
         foreach($this->handlers as $handler){
             
             if($handler['path'] === $requestPath && $method === $handler['method']){
