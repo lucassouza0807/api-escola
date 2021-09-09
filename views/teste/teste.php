@@ -1,3 +1,3 @@
 <html>
-    <h1> Lucas lindo d+ </h1>
+    <h1> Teste da class View </h1>
 </html>
