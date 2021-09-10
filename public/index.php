@@ -12,17 +12,17 @@ $router->get("/register", function() {
     View::render("register");
 });
 
-$router->post("/register", RegisterController::class . "::register");
+$router->post("/register", [RegisterController::class, "register"]);
 
-$router->get("/home", function($params = []) {
-    
+$router->get("/", function() {
+    View::render("home");
 });
 
 $router->get("/pessoa", function() {
     
 });
 $router->get("/index", function() {
-    echo "teste" ;
+    echo "teste do meu pau" ;
 });
 
 $router->addNotFoundHandler(function() {

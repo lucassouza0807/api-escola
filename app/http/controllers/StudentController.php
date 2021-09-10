@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers ;
+namespace App\HttpControllers ;
 
 require __DIR__."/../../vendor/autoload.php";
 
@@ -8,7 +8,7 @@ class StudentController
 {
     public function index()
     {
-        return "meu ovos" ;
+        return "Testing a controller !" ;
     }
     public function create()
     {
