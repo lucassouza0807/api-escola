@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers ;
+namespace App\Template ;
 
 use Exception ;
 

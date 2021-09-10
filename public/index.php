@@ -2,9 +2,10 @@
 
 require_once __DIR__."/../vendor/autoload.php" ;
 
-use App\Factories\RouterFactory;
-use App\Controllers\RegisterController;
-use App\Providers\View ;
+use App\Http\Controllers\RegisterController;
+use App\Factories\RouterFactory ;
+use App\Template\View ;
+
 
 $router = RouterFactory::create();
 

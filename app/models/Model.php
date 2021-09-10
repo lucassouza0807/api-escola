@@ -6,7 +6,7 @@ use PDO ;
 
 class Model 
 {
-    protected $database ;
+    static protected $database ;
     private $logger ;
 
     public function __construct()
@@ -14,8 +14,7 @@ class Model
         try{
             $db =  new PDO("mysql:host=localhost; dbname=escola_sao_camilo", "root", "");
             $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $this->database = $db ;
-            
+            self::$database = $db ;
 
         }catch(\PDOException $e){
             
@@ -24,7 +23,7 @@ class Model
         
     }
 
-    public function create(array $input = [])
+    function create(array $input = [])
     {
         $fieldsOfTheTable = [];
         $table = $this->table ;
