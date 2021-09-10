@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers ;
 
-require __DIR__."/../../vendor/autoload.php" ;
-
 use App\Models\Aluno ;
 
 class RegisterController

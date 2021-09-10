@@ -1,12 +1,11 @@
 <?php 
 namespace App\Models;
 
-require __DIR__."/../../vendor/autoload.php" ;
 use PDO ;
 
 class Model 
 {
-    static protected $database ;
+    protected $database ;
     private $logger ;
 
     public function __construct()
@@ -14,7 +13,7 @@ class Model
         try{
             $db =  new PDO("mysql:host=localhost; dbname=escola_sao_camilo", "root", "");
             $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            self::$database = $db ;
+            $this->database = $db ;
 
         }catch(\PDOException $e){
             

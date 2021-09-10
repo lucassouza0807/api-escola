@@ -2,8 +2,6 @@
 
 namespace App\HttpControllers ;
 
-require __DIR__."/../../vendor/autoload.php";
-
 class StudentController 
 {
     public function index()
