@@ -62,7 +62,7 @@ class RouterServiceProvider
         }
 
         if(!$callback){
-            header("HTTP/1.0 500 Not Found");
+            header("HTTP/1.0 404 Not Found");
             if(!empty($this->notFoundHandler)){
                 $callback = $this->notFoundHandler ;
             }
