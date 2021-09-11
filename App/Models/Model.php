@@ -11,7 +11,7 @@ class Model
     public function __construct()
     {
         try{
-            $db =  new PDO("mysql:host=127.0.0.1; dbname=escola_sao_camilo", "root", "");
+            $db =  new PDO("pgsql:host=ec2-52-72-125-94.compute-1.amazonaws.com; port=5432; dbname=dd0vqrniqseo2f", "rpeuxfjbwbntcm", "8dc4dcd462c971961ba9c076c0e1368d6a6de3932d671107b4e4f2a00ab47915");
             $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $this->database = $db ;
 
