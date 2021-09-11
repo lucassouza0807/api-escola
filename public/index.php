@@ -23,7 +23,7 @@ $router->get("/pessoa", function() {
     
 });
 $router->get("/index", function() {
-    echo "teste do meu pau" ;
+    echo "Closure Test" ;
 });
 
 $router->addNotFoundHandler(function() {
