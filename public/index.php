@@ -15,7 +15,7 @@ $router->get("/register", function() {
 
 $router->post("/register", [RegisterController::class, "register"]);
 
-$router->get("/", function() {
+$router->get("/user/{id}", function() {
     View::render("home");
 });
 

@@ -9,6 +9,7 @@ class View
     static function render($viewName)
     {
         $view = __DIR__."/../../views/".$viewName.".php";
+        $notFoundMessage = null ;
 
         try{
             if(file_exists($view)){
