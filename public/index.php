@@ -22,8 +22,8 @@ $router->get("/", function() {
 $router->get("/pessoa", function() {
     
 });
-$router->get("/index", function() {
-    echo "Closure Test" ;
+$router->get("/about", function() {
+    View::render("about") ;
 });
 
 $router->addNotFoundHandler(function() {

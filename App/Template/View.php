@@ -10,10 +10,15 @@ class View
     {
         $view = __DIR__."/../../views/".$viewName.".php";
 
-        if(file_exists($view)){
-            require $view ;
-        }else{
-            throw new Exception("<h1>The requested view {$viewName} does not exists </h1>");
+        try{
+            if(file_exists($view)){
+                require $view ;
+            }else{
+                throw new Exception("The requested view {$view} does not exists");
+            }
+        }catch(\Exception $msg){
+            $notFoundMessage = $msg->getMessage();
+            echo "<h2> $notFoundMessage </h2";
         }
     }
 }
