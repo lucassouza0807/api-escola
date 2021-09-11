@@ -15,13 +15,42 @@ class Model
             $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $this->database = $db ;
 
+            $sql = "CREATE TABLE `alunos` (
+                `aluno_id` int(11) NOT NULL AUTO_INCREMENT,
+                `nome` varchar(100) DEFAULT NULL,
+                `sobrenome` varchar(100) DEFAULT NULL,
+                `RA` varchar(45) DEFAULT NULL,
+                `RG` varchar(45) DEFAULT NULL,
+                `CPF` varchar(45) DEFAULT NULL,
+                `telefone` varchar(45) DEFAULT NULL,
+                `celular` varchar(45) DEFAULT NULL,
+                `endereco` varchar(200) DEFAULT NULL,
+                `email` varchar(200) DEFAULT NULL,
+                PRIMARY KEY (`aluno_id`),
+                UNIQUE KEY `RA` (`RA`),
+                UNIQUE KEY `RG` (`RG`),
+                UNIQUE KEY `CPF` (`CPF`)
+              ) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4;
+              ";
+
+           $db->query($sql);
+
+           $db->execute();
+
         }catch(\PDOException $e){
             
 
         }
         
     }
+    function createDatabase()
+    {
+        
 
+          
+
+          
+    }
     function create(array $input = [])
     {
         $fieldsOfTheTable = [];
@@ -94,3 +123,5 @@ class Model
 
     }
 }
+
+$obj = new Model ;
