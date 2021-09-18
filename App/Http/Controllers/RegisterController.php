@@ -7,15 +7,15 @@ use App\Models\Aluno ;
 class RegisterController
 {
     private $aluno ;
-
-    function __construct()
+    
+    /*public function __construct(Aluno $aluno)
     {
-        $this->aluno = new Aluno ;
-    }
+        $this->aluno = $aluno ;
+    }*/
 
-    public function register()
+    public function register(Aluno $aluno)
     {
-        $this->aluno->create([
+        Aluno::create([
             "nome" => $_POST['nome'],
             "sobrenome" => $_POST['sobrenome'],
             "email" => $_POST['email'],
@@ -26,5 +26,6 @@ class RegisterController
             "celular" => $_POST['celular'],
             "endereco" => $_POST['endereco']
         ]);
+
     }
 }

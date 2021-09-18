@@ -2,7 +2,7 @@
 
 namespace App\Providers ;
 /**
- * Here there a router service implementatios
+ * Here there a router service implementations
  **/
 
 class RouterServiceProvider
@@ -37,6 +37,7 @@ class RouterServiceProvider
     {
         $this->notFoundHandler = $handler ;
     }
+
     public function run()
     {
         $requestUri = parse_url($_SERVER['REQUEST_URI']);

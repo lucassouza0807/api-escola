@@ -1,61 +1,23 @@
-<?php 
+<?php  
+
 namespace App\Models;
 
 use PDO ;
 
+
 class Model 
 {
-    protected $database ;
-    private $logger ;
+    
+    private $database ;
+    private $tb ;
 
-    public function __construct()
-    {
-        try{
-            $db =  new PDO("pgsql:host=ec2-52-72-125-94.compute-1.amazonaws.com; port=5432; dbname=dd0vqrniqseo2f", "rpeuxfjbwbntcm", "8dc4dcd462c971961ba9c076c0e1368d6a6de3932d671107b4e4f2a00ab47915");
-            $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-            $this->database = $db ;
 
-            $sql = "CREATE TABLE `alunos` (
-                `aluno_id` int(11) NOT NULL AUTO_INCREMENT,
-                `nome` varchar(100) DEFAULT NULL,
-                `sobrenome` varchar(100) DEFAULT NULL,
-                `RA` varchar(45) DEFAULT NULL,
-                `RG` varchar(45) DEFAULT NULL,
-                `CPF` varchar(45) DEFAULT NULL,
-                `telefone` varchar(45) DEFAULT NULL,
-                `celular` varchar(45) DEFAULT NULL,
-                `endereco` varchar(200) DEFAULT NULL,
-                `email` varchar(200) DEFAULT NULL,
-                PRIMARY KEY (`aluno_id`),
-                UNIQUE KEY `RA` (`RA`),
-                UNIQUE KEY `RG` (`RG`),
-                UNIQUE KEY `CPF` (`CPF`)
-              ) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb4;
-              ";
-
-           $db->query($sql);
-
-           $db->execute();
-
-        }catch(\PDOException $e){
-            
-
-        }
-        
-    }
-    function createDatabase()
-    {
-        
-
-          
-
-          
-    }
-    function create(array $input = [])
+    static function create(array $input = [])
     {
         $fieldsOfTheTable = [];
-        $table = $this->table ;
         
+        $table = self::$table ;
+
         foreach($input as $fieldName => $value){
            array_push($fieldsOfTheTable, $fieldName);
         }
@@ -65,8 +27,8 @@ class Model
 
         try{
 
-            $sql = "insert into {$table} ($implodedField) values (:$placeholderColumns)";
-            $stmt = $this->database->prepare($sql);
+            $sql = "insert into alunos ($implodedField) values (:$placeholderColumns)";
+            $stmt = $database->prepare($sql);
 
             foreach($input as $row => $value){
                 $stmt->bindValue(":$row", $value);
@@ -124,4 +86,4 @@ class Model
     }
 }
 
-$obj = new Model ;
+$model = new Model ;

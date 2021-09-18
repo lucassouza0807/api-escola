@@ -5,6 +5,7 @@ require_once __DIR__."/../vendor/autoload.php" ;
 use App\Http\Controllers\RegisterController;
 use App\Factories\RouterFactory ;
 use App\Template\View ;
+use App\Http\Request ;
 
 
 $router = RouterFactory::create();
@@ -19,8 +20,11 @@ $router->get("/user/{id}", function() {
     View::render("home");
 });
 
-$router->get("/pessoa", function() {
-    
+$router->get("/pessoa", function($request) {
+    $request = new Request("lucas");
+
+
+    echo $request->withHeader("text/xml");
 });
 $router->get("/about", function() {
     View::render("about") ;
