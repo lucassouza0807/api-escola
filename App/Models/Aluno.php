@@ -5,7 +5,7 @@ use App\Models\Model;
 
 class Aluno extends Model
 {
-    protected $table = "alunos" ;
-    protected $primaryKey = "aluno_id" ;
+    protected static $table = "alunos" ;
+    protected static $primaryKey = "aluno_id" ;
 
 }

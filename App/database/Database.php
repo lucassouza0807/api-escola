@@ -2,29 +2,39 @@
 
 namespace App\Database ;
 
-require_once __DIR__."/../../vendor/autoload.php" ;
-
 use PDO ;
 
-class DB 
+class Database 
 {
-    protected $database ;
-
-    public function getDatabase()
+    private $connection ;
+    
+    public function __construct()
     {
         try{
 
             require_once __DIR__."/config.php" ;
             
-            $db =  new PDO("`{DRIVER}:host={HOST}; dbname={DB_HOST}", "DB_USER", "{DB_PASSWORD}");
-            $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $db = [
+                "driver" => DRIVER,
+                "host" => HOST,
+                "db_name" => DB_NAME,
+                "user" => DB_USER,
+                "password" => DB_PASSWORD  
+            ];
 
-            return $db ;
+            $conn =  new PDO("{$db['driver']}:host={$db['host']}; dbname={$db['db_name']}", "{$db['user']}", "{$db['password']}");
+            $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+           $this->connection = $conn ;
             
         }catch(\PDOException $e){
-            
-
+            echo $e->getMessage();
         }    
+    }
+
+    public function getDatabase()
+    {
+        return $this->connection ;
     }
 
 }

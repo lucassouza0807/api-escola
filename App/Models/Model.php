@@ -2,21 +2,19 @@
 
 namespace App\Models;
 
+use App\Factories\DatabaseFactory as DB ;
 use PDO ;
-
 
 class Model 
 {
-    
-    private $database ;
-    private $tb ;
-
 
     static function create(array $input = [])
     {
         $fieldsOfTheTable = [];
+        $tb = self::$table ;
         
-        $table = self::$table ;
+        $db = DB::instance();
+        $database = $db->getDatabase();
 
         foreach($input as $fieldName => $value){
            array_push($fieldsOfTheTable, $fieldName);
