@@ -36,9 +36,7 @@ class Model
 
         }catch(\PDOException $e){
 
-            if($code = 23000){
-                header("HTTP/1.0 404 Not Found");
-            }
+            
         }   
     }
 
