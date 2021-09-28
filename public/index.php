@@ -14,6 +14,9 @@ $router->get("/register", function() {
     View::render("register");
 });
 
+$router->get("/", function() {
+    echo "index" ;
+});
 $router->post("/register", [RegisterController::class, "register"]);
 
 $router->get("/user/{id}", function() {

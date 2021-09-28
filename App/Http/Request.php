@@ -2,23 +2,25 @@
 
 namespace App\Http ; 
 
-class Request implements Psr\Http\Message\RequestInterface
+class Request 
 {
     private $request = [];
     private $response ;
     
-    function __construct($request)
+    public function __construct()
     {
-        $this->request = $request ;
+        if(isset($_GET)){
+            $this->request = array_merge($this->request, $_GET);
+        }
+
+        if(isset($_POST)){
+            $this->request = array_merge($this->request, $_POST);
+        }
     }
-    
-    public function withHeader($header)
+
+    public function testRequest() : array
     {
-        header('Content-Type: {$header}; charset=utf-8');
-        
-        $json = json_encode($this->request);
-
-        return $json ;
-
+        return $this->request ;
     }
+
 }

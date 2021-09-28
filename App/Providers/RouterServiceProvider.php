@@ -1,35 +1,42 @@
-<?php 
+<?php
 
 namespace App\Providers ;
+
+use App\Middlewares\AuthencationMiddleware ;
+
 /**
  * Here there a router service implementations
+ *
  **/
-
+ 
 class RouterServiceProvider
 {
     private array $handlers ;
     private $notFoundHandler;
+
+    private $middleware ;
+
     private const METHOD_POST = "POST" ;
     private const METHOD_GET = "GET" ;
 
-    public function get(string $path,$handler) : void
+    public function get(string $path, $handler, $middleware = null) : void
     {
         $this->addHandler(self::METHOD_GET, $path, $handler);
     
     }
 
-
-    public function post(string $path, $handler) : void
+    public function post(string $path, $handler, $middleware = null) : void
     {
         $this->addHandler(self::METHOD_POST, $path, $handler);
     }
 
-    private function addHandler(string $method, string $path, $handler) : void 
+    private function addHandler(string $method, string $path, $handler, $middleware = null) : void 
     {
         $this->handlers[$method . $path] = [
             'path' => $path,
             'method' => $method,
-            'handler' => $handler
+            'handler' => $handler,
+            'middleware' => $middleware,
         ];
     }
 
