@@ -18,7 +18,7 @@ class Request
         }
     }
 
-    public function testRequest() : array
+    public function get() : array
     {
         return $this->request ;
     }

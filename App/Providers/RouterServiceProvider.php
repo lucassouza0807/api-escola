@@ -6,7 +6,7 @@ use App\Middlewares\AuthencationMiddleware ;
 
 /**
  * Here there a router service implementations
- *
+ *@array middleware
  **/
  
 class RouterServiceProvider

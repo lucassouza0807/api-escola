@@ -3,6 +3,7 @@
 namespace App\Database ;
 
 use PDO ;
+use App\Http\Request ;
 
 class Database 
 {
@@ -26,10 +27,13 @@ class Database
             $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
            $this->connection = $conn ;
+
             
         }catch(\PDOException $e){
             echo $e->getMessage();
-        }    
+        }
+        
+        
     }
 
     public function getDatabase()
