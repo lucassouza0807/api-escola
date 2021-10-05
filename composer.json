@@ -1,7 +1,6 @@
 {
-    "name" :"elmini/framework",
-    "description": "Mini framework MVC",
-    "license": "MIT",
+    "name" :"personal/repository",
+    "description": "My personal repository",
     "authors": [
         {
         "name" : "Lucas Souza Silva",

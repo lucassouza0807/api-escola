@@ -4,12 +4,12 @@ namespace App\Factories ;
 
 require_once __DIR__."/../../vendor/autoload.php" ;
 
-use App\Providers\RouterServiceProvider ;
+use App\Router\Router ;
 
 class RouterFactory
 {
     static function create()
     {
-        return new RouterServiceProvider ;
+        return new Router ;
     }
 } 

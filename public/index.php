@@ -2,42 +2,29 @@
 
 require_once __DIR__."/../vendor/autoload.php" ;
 
-
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController ;
 use App\Factories\RouterFactory ;
-use App\Template\View ;
-use App\Http\Request ;
-
+use League\Plates\Engine ;
 
 $router = RouterFactory::create();
 
-$router->get("/register", function() {
-    View::render("register");
-});
-
-$router->get("/login", function() {
-    View::render("login_page");
-});
+$view = new Engine("../views", "php");
 
 $router->post("/register_handler", [RegisterController::class, "registerNewUser"]);
 $router->post("/login_handler", [LoginController::class, "login"]);
 
-$router->get("/user/{id}", function() {
-    View::render("home");
-});
+$teste = fn() => $view->render("register");
 
-$router->get("/pessoa", function($request) {
-    echo "Pessoa";
-});
+$router->get("/register", fn() => $view->render("register"));
 
-$router->get("/about", function() {
-    View::render("about") ;
-});
+$router->get("/login", fn() => $view->render("login_page"));
 
-$router->addNotFoundHandler(function() {
-    View::render("404_page");
-});
+$router->get("/home", fn() => $nome = "lucas");
+
+
+$router->addNotFoundHandler( fn() => $view->render("404_page") );
+
 
 $router->run();
 

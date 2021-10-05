@@ -36,7 +36,7 @@ class Database
         
     }
 
-    public function getDatabase()
+    public function getConnection()
     {
         return $this->connection ;
     }

@@ -1,15 +1,10 @@
 <?php
 
-namespace App\Providers ;
+namespace App\Router ;
 
 use App\Middlewares\AuthencationMiddleware ;
-
-/**
- * Here there a router service implementations
- *@array middleware
- **/
  
-class RouterServiceProvider
+class Router
 {
     private array $handlers ;
     private $notFoundHandler;
@@ -68,15 +63,22 @@ class RouterServiceProvider
             $className = new $callback[0];
             $classMethod = $callback[1];
             $callback = [$className, $classMethod];
+            
+        }
+
+        if(is_callable($callback)){
+            echo $callback();
+            
         }
 
         if(!$callback){
             header("HTTP/1.0 404 Not Found");
             if(!empty($this->notFoundHandler)){
                 $callback = $this->notFoundHandler ;
+                echo $callback();
             }
         }
-        
+
         call_user_func_array($callback, [
             array_merge($_GET, $_POST)
         ]);
