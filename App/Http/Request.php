@@ -17,14 +17,14 @@ class Request
             $this->request = array_merge($this->request, $_POST);
         }
 
-        filter_var_array($this->request, FILTER_SANITIZE_STRING);
+        $this->request = filter_var_array($this->request, FILTER_SANITIZE_STRING);
 
         
     }
 
     public function input($user_input) : string
     {
-        $input = $this->request["nome"];
+        $input = $this->request[$user_input];
 
         return $input ;
     }
