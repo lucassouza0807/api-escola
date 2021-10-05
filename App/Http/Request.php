@@ -5,7 +5,6 @@ namespace App\Http ;
 class Request 
 {
     private $request = [] ;
-    private $response ;
     
     public function __construct()
     {
