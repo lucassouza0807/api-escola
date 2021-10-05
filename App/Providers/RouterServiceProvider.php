@@ -47,7 +47,8 @@ class RouterServiceProvider
 
     public function run()
     {
-        $requestUri = parse_url($_SERVER['REQUEST_URI']);
+        $requestUri = parse_url(filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL));
+
         $requestPath = $requestUri['path'];
         $method = $_SERVER['REQUEST_METHOD'];
 

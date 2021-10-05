@@ -15,14 +15,15 @@ class RegisterController
             $request = new Request();
             $db = DB::instance()->getDatabase(); //Instâcia do bando de dados.
 
-            $user_data = $request->get(); //Esses dados já vem sanitizados e livres de qualquer ação maliciosa.
-            $hashed_password = password_hash($user_data['senha'], PASSWORD_BCRYPT);
+            $hashed_password = password_hash($request->input("senha"), PASSWORD_BCRYPT);
 
             $stmt = $db->prepare("insert into usuarios (nome, email, senha) values (:nome, :email, :senha)");
+            
+            $stmt->bindValue(":nome", $request->input("nome"));
+            $stmt->bindValue(":email", $request->input("email"));
+            $stmt->bindValue(":senha", $hashed_password);
 
-            $stmt->bindParam(":nome", $user_data['nome']);
-            $stmt->bindParam(":email", $user_data['email']);
-            $stmt->bindParam(":senha", $hashed_password);
+            echo $request->input("nome");
 
             $stmt->execute();
 

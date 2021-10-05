@@ -4,7 +4,7 @@ namespace App\Http ;
 
 class Request 
 {
-    private $request = [];
+    private $request = [] ;
     private $response ;
     
     public function __construct()
@@ -16,11 +16,17 @@ class Request
         if(isset($_POST)){
             $this->request = array_merge($this->request, $_POST);
         }
+
+        filter_var_array($this->request, FILTER_SANITIZE_STRING);
+
+        
     }
 
-    public function get() : array
+    public function input($user_input) : string
     {
-        return $this->request ;
+        $input = $this->request["nome"];
+
+        return $input ;
     }
 
 }
