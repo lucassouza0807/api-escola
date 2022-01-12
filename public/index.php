@@ -2,29 +2,33 @@
 
 require_once __DIR__."/../vendor/autoload.php" ;
 
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\LoginController ;
-use App\Factories\RouterFactory ;
-use League\Plates\Engine ;
+use App\Factories\RouterFactory;
+use App\Controllers\AlunoController;
 
-$router = RouterFactory::create();
+header("Content-Type: Application/json");
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Headers: Content-Type");
+header("Connection: keep-alive");
+header("Access-Control-Allow-Methods: HEAD, GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
 
-$view = new Engine("../views", "php");
+$app = RouterFactory::create();
 
-$router->post("/register_handler", [RegisterController::class, "registerNewUser"]);
-$router->post("/login_handler", [LoginController::class, "login"]);
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header("HTTP/1.1 200 OK");
+    return;
 
-$teste = fn() => $view->render("register");
+}
 
-$router->get("/register", fn() => $view->render("register"));
+$app->get("/alunos", [AlunoController::class, "index"]);
 
-$router->get("/login", fn() => $view->render("login_page"));
+$app->get("/aluno", [AlunoController::class, "pesquisarPorId"]);
 
-$router->get("/home", fn() => $nome = "lucas");
+$app->get("/novo-usuario", function() {
+    require_once __DIR__."/../views/form.php";
+});
 
 
-$router->addNotFoundHandler( fn() => $view->render("404_page") );
+$app->post("/novo-aluno", [AlunoController::class, "cadastrarAluno"]);
 
-
-$router->run();
-
+$app->run();

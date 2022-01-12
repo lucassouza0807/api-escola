@@ -23,14 +23,18 @@ class Database
                 "password" => DB_PASSWORD  
             ];
 
-            $conn =  new PDO("{$db['driver']}:host={$db['host']}; dbname={$db['db_name']}", "{$db['user']}", "{$db['password']}");
+            $conn = new PDO(
+                "{$db['driver']}:host={$db['host']}; dbname={$db['db_name']}", "{$db['user']}", "{$db['password']}",
+                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+            );
+
             $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-           $this->connection = $conn ;
+            $this->connection = $conn ;
 
             
         }catch(\PDOException $e){
-            echo $e->getMessage();
+            //echo $e->getCode();
         }
         
         

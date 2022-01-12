@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Router ;
-
 use App\Middlewares\AuthencationMiddleware ;
- 
+use App\Request\Request;
+
 class Router
 {
     private array $handlers ;
@@ -13,8 +13,8 @@ class Router
 
     private const METHOD_POST = "POST" ;
     private const METHOD_GET = "GET" ;
-
-    public function get(string $path, $handler, $middleware = null) : void
+    
+    public function get(string $path, $handler) : void
     {
         $this->addHandler(self::METHOD_GET, $path, $handler);
     
@@ -42,7 +42,9 @@ class Router
 
     public function run()
     {
-        $requestUri = parse_url(filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL));
+        $requestUri = parse_url(
+            filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL)
+        );
 
         $requestPath = $requestUri['path'];
         $method = $_SERVER['REQUEST_METHOD'];
@@ -53,7 +55,6 @@ class Router
         $callback = null ;
 
         foreach($this->handlers as $handler){
-            
             if($handler['path'] === $requestPath && $method === $handler['method']){
                 $callback = $handler['handler'];
             }
@@ -62,12 +63,16 @@ class Router
         if(is_array($callback)){
             $className = new $callback[0];
             $classMethod = $callback[1];
-            $callback = [$className, $classMethod];
+            $callback = [$className, $classMethod,];
+            return call_user_func_array($callback,[
+                array_merge($_GET, $_POST)
+            ]);
+            
             
         }
 
         if(is_callable($callback)){
-            echo $callback();
+            return call_user_func($callback);
             
         }
 
@@ -75,14 +80,10 @@ class Router
             header("HTTP/1.0 404 Not Found");
             if(!empty($this->notFoundHandler)){
                 $callback = $this->notFoundHandler ;
-                echo $callback();
+                $callback();
             }
         }
 
-        call_user_func_array($callback, [
-            array_merge($_GET, $_POST)
-        ]);
-        
     }
 
 
