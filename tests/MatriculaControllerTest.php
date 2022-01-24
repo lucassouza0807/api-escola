@@ -7,10 +7,10 @@ use App\Http\Controllers\RegisterController ;
 
 /** @test */
 
-class TestController extends TestCase
+class MatriculaControllerTest extends TestCase
 {
     /** @test **/
-    public function TestIfControllerWorks()
+    public function testIfControllerWorks()
     {
         $controller = new RegisterController ;
 

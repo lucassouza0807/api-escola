@@ -4,25 +4,31 @@ namespace App\Controllers;
 
 use App\Factories\DatabaseFactory as DB;
 
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
 class AlunoController
 {
     protected $database;
 
     function __construct()
-    {
+    {     
         $this->database = DB::instance()->getConnection();
     }
 
-    public function index() 
+  
+    public function index($request, $response) 
     {
        $stmt = $this->database->query("select * from alunos");
        $resultado = json_encode($stmt->fetchAll(\PDO::FETCH_ASSOC));
 
-       echo $resultado;
+       $response->getBody()->write($resultado);
+
+       return $response;
        
     }
 
-    public function pesquisarPorId()
+    public function pesquisarPorId($request, $response)
     {
         try {
             $stmt = $this->database->prepare("select * from alunos where aluno_id=:id");
@@ -51,16 +57,10 @@ class AlunoController
         
     }
 
-    public function cadastrarAluno()
+    public function cadastrarAluno($request, $response)
     {
         $input = json_decode(file_get_contents('php://input'), true);
      
-        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-            header("HTTP/1.1 200 OK");
-            return;
-        
-        }
-
         try {
             $data = $input['data'];
 
@@ -86,15 +86,10 @@ class AlunoController
         }
     }
 
-    public function alterarDadosPessoais()
+    public function alterarDadosPessoais($request, $response)
     {
         $input = json_decode(file_get_contents("php://input", true));
 
-        if($_SERVER["REQUEST_METHOD"] === 'OPTIONS') {
-            header('HTTP/1.1 200 ok');
-            return;
-        }
-        
         $data = $input['data'];
         $aluno_CPF = $data['cpf'];
 
