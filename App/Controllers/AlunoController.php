@@ -2,63 +2,72 @@
 
 namespace App\Controllers;
 
-use App\Factories\DatabaseFactory as DB;
-
+use \App\Database\Database;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+
 class AlunoController
 {
-    protected $database;
+    private $database;
 
-    function __construct()
-    {     
-        $this->database = DB::instance()->getConnection();
+    public function __construct()
+    {
+        $this->database = Database::instance()->getConnection();
     }
 
-  
     public function index($request, $response) 
     {
-       $stmt = $this->database->query("select * from alunos");
-       $resultado = json_encode($stmt->fetchAll(\PDO::FETCH_ASSOC));
+        $query = $this->database->query("select * from alunos");
 
-       $response->getBody()->write($resultado);
+        $query->execute();
 
-       return $response;
-       
+        $result = json_encode($query->fetchAll(\PDO::FETCH_ASSOC));
+
+        $response->getBody()->write($result);
+
+        return $response->withHeader("Content-type", "Application/json");
     }
 
-    public function pesquisarPorId($request, $response)
+    public function pesquisarPorId($request, $response, $args)
     {
         try {
+            $aluno_id = $args['aluno_id'];
+
             $stmt = $this->database->prepare("select * from alunos where aluno_id=:id");
             
-            $stmt->bindValue(":id", $_GET['id']);
+            $stmt->bindValue(":id", $aluno_id);
 
             $stmt->execute();
 
             $count = $stmt->rowCount();
             
             if($count == 0) {
-                echo json_encode(['resultado' => 'não encontrado']);
+                $resultado = json_encode([
+                    "resultado" => "não encontrado"
+                ]);
+
+                $response->getBody()->write($resultado);
+                return $response->withHeader("Content-type", "Application/json");
                 
             } else {
                 $resultado = json_encode($stmt->fetchAll(\PDO::FETCH_ASSOC));
+                $response->getBody()->write($resultado);
 
-                echo $resultado;
+                return $response->withHeader("Content-type", "Application/json");;
             }
 
 
         } catch (PDOException $error) {
             if($error) {
-                echo json_encode(["erro" => "erro generico"]);
+                $response->getBody(json_encode(["error" => "genericoo"]))->withHeader("Content-type", "Application/json");;
             }
         }
         
     }
 
     public function cadastrarAluno($request, $response)
-    {
+    {   
         $input = json_decode(file_get_contents('php://input'), true);
      
         try {

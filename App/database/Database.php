@@ -2,14 +2,13 @@
 
 namespace App\Database ;
 
-use PDO ;
-use App\Http\Request ;
+use PDO;
 
 class Database 
 {
-    private $connection ;
-    
-    public function __construct()
+    private static $instance ;
+
+    protected function __construct()
     {
         try{
 
@@ -34,15 +33,38 @@ class Database
 
             
         }catch(\PDOException $e){
-            //echo $e->getCode();
+            echo $e->getCode();
         }
         
         
     }
+    
+    protected function __clone() {}
 
+    public function __wakeup() {
+        throw new \Exception("Cannot unserialize a singleton.");
+    }
+
+    public static function instance() : Database
+    {
+        $class = static::class;
+
+        if (!isset(self::$instance[$class])) {
+            self::$instance[$class] = new static();
+
+        }
+
+        return self::$instance[$class];
+
+    }
+
+    
     public function getConnection()
     {
         return $this->connection ;
     }
 
 }
+
+
+
