@@ -12,15 +12,13 @@
             "App\\" : "./App"     
         }
     },
-    "require-dev": {
-        "vlucas/phpdotenv": "^5.4"
-    },
     "require": {
         "slim/slim": "4.*",
         "slim/psr7": "^1.5",
         "nyholm/psr7": "^1.4",
         "nyholm/psr7-server": "^1.0",
         "guzzlehttp/psr7": "1",
-        "laminas/laminas-diactoros": "^2.8"
+        "laminas/laminas-diactoros": "^2.8",
+        "vlucas/phpdotenv": "^5.4"
     }
 }
