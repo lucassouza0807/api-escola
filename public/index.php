@@ -15,6 +15,13 @@ $app->addRoutingMiddleware();
 $errorMiddleware = $app->addErrorMiddleware(true, true, true);
 
 
+$app->get("/", function($request, $reponse) {
+    $reponse->getBody()->write("Lucas");
+
+    return $reponse;
+
+});
+
 $app->get("/alunos", "App\Controllers\AlunoController:index");
 
 $app->get("/aluno/{aluno_id}", "\App\Controllers\AlunoController:pesquisarPorId");
