@@ -33,7 +33,18 @@ class Database
 
             
         }catch(\PDOException $e){
-            echo $e->getCode();
+            $message = $e->getMessage();
+
+            $api_key = "5299792817:AAHhazae3qPZdAQbFulwtO-a7wjsriyZQsY";
+
+            $data = [
+                "chat_id" => "5292413053",
+                "text" => $message
+            ];
+
+            $sendMessage = file_get_contents("https://api.telegram.org/bot$api_key/sendMessage?" . http_build_query($data) );
+            
+
         }
         
         
