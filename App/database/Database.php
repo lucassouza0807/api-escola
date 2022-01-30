@@ -23,7 +23,7 @@ class Database
             ];
 
             $conn = new PDO(
-                "{$db['driver']}:host={$db['host']}; dbname={$db['db_name']}", "{$db['user']}", "{$db['password']}",
+                "{$db['driver']}:host={$db['host']}; dbname={$db['db_name']}; port=5432", "{$db['user']}", "{$db['password']}",
                 [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
 
