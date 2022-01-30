@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Database ;
+namespace App\Services ;
 
 use PDO;
 
@@ -35,15 +35,12 @@ class Database
         }catch(\PDOException $e){
             $message = $e->getMessage();
 
-            $api_key = "5299792817:AAHhazae3qPZdAQbFulwtO-a7wjsriyZQsY";
-
             $data = [
-                "chat_id" => "5292413053",
+                "chat_id" => CHAT_ID,
                 "text" => $message
             ];
 
-            $sendMessage = file_get_contents("https://api.telegram.org/bot$api_key/sendMessage?" . http_build_query($data) );
-            
+            $sendMessage = file_get_contents("https://api.telegram.org/bot" . TELEGRAM_SECRET . "/sendMessage?" . http_build_query($data) );            
 
         }
         
