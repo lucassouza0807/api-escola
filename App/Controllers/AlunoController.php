@@ -26,7 +26,7 @@ class AlunoController
 
         $response->getBody()->write($result);
 
-        return $response->withHeader("Content-type", "Application/json");
+        return $response;//->withHeader("Content-type", "Application/json");
     }
 
     public function pesquisarPorId($request, $response, $args)
@@ -58,7 +58,7 @@ class AlunoController
             }
 
 
-        } catch (PDOException $error) {
+        } catch (\PDOException $error) {
             if($error) {
                 $response->getBody(json_encode(["error" => "genericoo"]))->withHeader("Content-type", "Application/json");;
             }
@@ -69,28 +69,34 @@ class AlunoController
     public function cadastrarAluno($request, $response)
     {   
         $input = json_decode(file_get_contents('php://input'), true);
-     
-        try {
-            $data = $input['data'];
 
+        try {
             $stmt = $this->database->prepare("insert into alunos (nome, cpf, rg, email, celular, telefone, endereco ) values (:nome, :cpf, :rg, :email, :celular, :telefone, :endereco)");
         
-            $stmt->bindValue(":nome", $data['nome']);
-            $stmt->bindValue(":cpf", $data['cpf']);
-            $stmt->bindValue(":rg", $data['rg']);
-            $stmt->bindValue(":email", $data['email']);
-            $stmt->bindValue(":celular", $data['celular']);
-            $stmt->bindValue(":telefone", $data['telefone']);
-            $stmt->bindValue(":endereco", $data['endereco']);
+            $stmt->bindValue(":nome", $input['nome']);
+            $stmt->bindValue(":cpf", $input['cpf']);
+            $stmt->bindValue(":rg", $input['rg']);
+            $stmt->bindValue(":email", $input['email']);
+            $stmt->bindValue(":celular", $input['celular']);
+            $stmt->bindValue(":telefone", $input['telefone']);
+            $stmt->bindValue(":endereco", $input['endereco']);
             
             $stmt->execute();
-            echo json_encode(['mensagem' => "Cadastrado efetuado com sucesso com suscesso!"]);
+
+            $successMessage = json_encode(['mensagem' => "Cadastro efetuado com sucesso com sucesso!"]);
+
+            $response->getBody()->write($successMessage);
+            return $response;
 
         } catch (\PDOException $error) {
-            if($error->getCode() == 23000) {
-                echo json_encode(['mensagem' => "O CPF ou RG já estão em uso."]);
+            if($error->getCode() == 23505) {
+                $duplicateErrorMessage = json_encode(['mensagem' => "O CPF ou RG já estão em uso."]);
+                //response for duplicate entries
+                $response->getBody()->write($duplicateErrorMessage);
+                return $response;
+
             } else {
-                echo json_encode(["mensagem" => "erro interno"]);
+                //Goes to the log soon
             }            
         }
     }

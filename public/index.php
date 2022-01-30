@@ -26,4 +26,7 @@ $app->get("/alunos", "App\Controllers\AlunoController:index");
 
 $app->get("/aluno/{aluno_id}", "\App\Controllers\AlunoController:pesquisarPorId");
 
+$app->post("/cadastrarAluno", "\App\Controllers\AlunoController:cadastrarAluno");
+
+
 $app->run();
